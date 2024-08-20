@@ -8,7 +8,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { chartData } from "@/lib/constant";
+import { sensorData } from "@/lib/constant";
 
 const chartConfig = {
   desktop: {
@@ -22,7 +22,7 @@ export function Component() {
     <ChartContainer config={chartConfig} className="w-screen h-screen py-3">
       <LineChart
         accessibilityLayer
-        data={chartData}
+        data={sensorData}
         margin={{
           left: 12,
           right: 12,
