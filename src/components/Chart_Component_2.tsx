@@ -1,6 +1,5 @@
 "use client";
 
-import { sensorData } from "@/lib/constant";
 import React from "react";
 import {
   LineChart,
@@ -13,16 +12,20 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-interface SensorData {
+export interface SensorData {
   time_ms: number;
   ax: number;
 }
 
-const SensorDataChart: React.FC = () => {
+interface SensorDataChartProps {
+  data: SensorData[];
+}
+
+const SensorDataChart: React.FC<SensorDataChartProps> = ({ data }) => {
   return (
     <div className="w-screen h-screen">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={sensorData}>
+        <LineChart data={data}>
           <XAxis
             dataKey="time_ms"
             label={{
