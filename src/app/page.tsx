@@ -13,11 +13,20 @@ const Home = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch("/api/data");
+      const response = await fetch("http://192.168.17.113:8000/collect", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Cache-Control": "no-store", // Prevent caching
+        },
+      });
+
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
       const data: SensorData[] = await response.json();
+      console.log("Data fetched:", data);
       setSensorData(data);
     } catch (err) {
       setError("Failed to fetch sensor data");

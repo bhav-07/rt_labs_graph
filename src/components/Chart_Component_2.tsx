@@ -47,7 +47,7 @@ const SensorDataChart: React.FC<SensorDataChartProps> = ({ data }) => {
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="ax" stroke="#8884d8" />
+          <Line type="natural" dataKey="ax" stroke="#8884d8" />
         </LineChart>
       </ResponsiveContainer>
     </div>
