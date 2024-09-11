@@ -3,6 +3,7 @@
 import SensorDataChart, { SensorData } from "@/components/Chart_Component_2";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
+import axios from "axios";
 
 const Home = () => {
   const [sensorData, setSensorData] = useState<SensorData[]>([]);
@@ -13,24 +14,24 @@ const Home = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch("http://192.168.17.113:8000/collect", {
-        method: "GET",
+      const response = await axios.get<SensorData[]>("/api/proxy/collect", {
         headers: {
           Accept: "application/json",
-          "Cache-Control": "no-store", // Prevent caching
+          "Cache-Control": "no-store",
         },
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data: SensorData[] = await response.json();
-      console.log("Data fetched:", data);
-      setSensorData(data);
+      console.log("Data fetched:", response.data);
+      setSensorData(response.data);
     } catch (err) {
-      setError("Failed to fetch sensor data");
-      console.error("Error:", err);
+      if (axios.isAxiosError(err)) {
+        setError(`Failed to fetch sensor data: ${err.message}`);
+        console.error("Error details:", err.response?.data || err.message);
+        console.error("Full error object:", err);
+      } else {
+        setError("An unexpected error occurred");
+        console.error("Unexpected error:", err);
+      }
     } finally {
       setLoading(false);
     }
